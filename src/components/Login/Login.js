@@ -1,30 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { loginUser } from "../../apis/api";
+import "./Login.css";
+import LoginForm from "./LoginForm";
 
 const Login = () => {
+  const history = useHistory();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [response, setResponse] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      const { data } = await loginUser({ email, password });
+      console.log("data", data);
+      localStorage.setItem("email", data.email);
+      localStorage.setItem("name", data.name);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userType", data.userType);
+      history.push("/landing");
+    } catch (error) {
+      console.log(error.response);
+      setResponse(error.response.data.message);
+    }
+  }
   return (
     <div>
-      <section className="login_section">
-        <div className="login_container">
-          <div className="login_form">
-            <h3>Log In</h3>
-            <form>
-              <div className="login_fields">
-                <div className="input_field">
-                  <label>Email address</label>
-                  <input type="email" placeholder="" />
-                </div>
-                <div className="input_field">
-                  <label>Password</label>
-                  <input type="password" placeholder="" />
-                </div>
-                <div className="submit_btn">
-                  <button type="submit">Login</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </section>
+      <LoginForm
+        handleSubmit={handleSubmit}
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+        response={response}
+      />
     </div>
   );
 };
