@@ -17,8 +17,12 @@ const Login = () => {
       console.log("data", data);
       localStorage.setItem("email", data.email);
       localStorage.setItem("name", data.name);
-      localStorage.setItem("token", data.token);
       localStorage.setItem("userType", data.userType);
+      if (data.userType === "admin") {
+        localStorage.setItem("adminToken", data.token);
+      } else {
+        localStorage.setItem("token", data.token);
+      }
       history.push("/landing");
     } catch (error) {
       console.log(error.response);
