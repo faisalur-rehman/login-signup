@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./LandingPage.css";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const LandingPage = () => {
   useEffect(() => {
@@ -8,6 +8,7 @@ const LandingPage = () => {
       console.log("type", localStorage.getItem("userType"));
       history.push("/");
     }
+    //eslint-disable-next-line
   }, []);
   const history = useHistory();
   function handleClick() {
