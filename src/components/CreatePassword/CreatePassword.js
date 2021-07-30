@@ -21,6 +21,7 @@ const CreatePassword = () => {
         history.push("/");
       } catch (error) {
         console.log(error.response);
+        setResponse(error.response.data.message);
       }
     } else {
       console.log("false");
